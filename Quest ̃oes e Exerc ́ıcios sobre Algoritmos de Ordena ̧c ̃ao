@@ -124,10 +124,55 @@ int main() {
 }
 
 Questão 4:
+Quando falamos do Insertion Sort com Busca sequencial 
+- Em seu melhor caso ele irá possuir O(n) comparações e 0 trocas 
+- Em um caso médio teremos por volta de O(n^2) comparações e por volta de O(n^2) trocas
+- Em seu pior caso teremos O(n^2) comparações e O(n^2) trocas
 
+No Insertion Sort com Busca binária
+- Em seu melhor caso ele irá realizar O(n) comparaçõs e 0 trocas
+- Em seus casos medianos ele irá realizar por volta de O(n^2) trocas e por volta de O(n^2) comparações
+- Em seu pior caso ele irá realizar O(n^2) comparações e O(n^2) trocas
+
+Assim podemos concluir que o desempenho de ambos os métodos é extremamente parecido, se não idêntico.
 
 Questão 5:
+#include <iostream>
+using namespace std;
 
+void selectionSortMaior(int arr[], int n) {
+    for (int i = n - 1; i > 0; i--) {
+        int maxIndex = 0;
+        for (int j = 1; j <= i; j++) {
+            if (arr[j] > arr[maxIndex]) {
+                maxIndex = j;
+            }
+        }
+        swap(arr[maxIndex], arr[i]);
+    }
+}
+
+int main() {
+    int n;
+    cout << "Digite o número de elementos: ";
+    cin >> n;
+
+    int arr[n];
+    cout << "Digite os elementos:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    selectionSortMaior(arr, n);
+
+    cout << "Array ordenado:\n";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
 
 Questão 6:
 
