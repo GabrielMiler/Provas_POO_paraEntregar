@@ -115,3 +115,64 @@ int main(){
 
 Questão 6:
 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+class ListaDeCompras {
+public:
+    vector<string> itens;
+    
+    void adcionarItem(const string& item){
+        itens.push_back(item);
+        cout << item << " adicionado à lista." << endl;
+    }
+    void removerItem(const string& item) {
+        auto it = find(itens.begin(), itens.end(), item);
+        if (it != itens.end()) {
+            itens.erase(it);
+            cout << item << " removido da lista." << endl;
+        } else {
+            cout << item << " não encontrado na lista." << endl;
+        }
+    }
+    void exibirLista(){
+        if (itens.empty()) {
+            cout << "A lista de compras está vazia." << endl;
+            return;
+        }
+        cout << "Lista de Compras:" << endl;
+        for (const auto& item : itens) {
+            cout << "- " << item << endl;
+        }
+    }
+    void limparLista(){
+        itens.clear();
+        cout << "Lista de compras limpa." << endl;
+    }
+};
+int main(){
+    ListaDeCompras lista;
+    
+    lista.adcionarItem("Batom");
+    lista.adcionarItem("Chapéu");
+    lista.adcionarItem("Batata");
+    lista.adcionarItem("Guarda-Chuva");
+    
+    lista.exibirLista();
+    cout << endl;
+    
+    lista.removerItem("Batom");
+    
+    lista.exibirLista();
+    cout << endl;
+    
+    lista.limparLista();
+    
+    lista.exibirLista();
+    return 0;
+}
+
+Questão 7:
+
