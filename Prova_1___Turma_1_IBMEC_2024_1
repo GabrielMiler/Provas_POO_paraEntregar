@@ -84,3 +84,34 @@ int main()
 
 Questão 5:
 
+int main(){
+    Veiculo meuVeiculo("Toyota","Etios",2019,"Branco",50000.00);
+    
+    cout << "Detalhes do veículo:" << endl;
+    meuVeiculo.exibir_detalhes();
+    cout << endl;
+
+    cout << "Depreciação após 3 anos:" << endl;
+    meuVeiculo.calcular_depreciacao(3);
+    cout << endl;
+
+    cout << "Mudança de cor:" << endl;
+    meuVeiculo.pintar("Vermelho");
+    cout << endl;
+
+    cout << "Aumento de preço:" << endl;
+    meuVeiculo.aumentar_preco(5000.00);
+    cout << endl;
+    
+    cout << "Atualização de modelo:" << endl;
+    meuVeiculo.atualizar_modelo("Corolla Altis");
+    cout << endl;
+    
+    cout << "Detalhes do veículo após atualizações:" << endl;
+    meuVeiculo.exibir_detalhes();
+    
+    return 0;
+}
+
+Questão 6:
+
