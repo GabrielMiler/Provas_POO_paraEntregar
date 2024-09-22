@@ -1,0 +1,17 @@
+Questão 1:
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    string N;
+    cin >> N;
+    if(N.find("1444") != string::npos){
+        cout << N << " es de Mala Suerte" << endl;
+    } else{
+        cout << N << " NO es de Mala Suerte" << endl;
+    }
+    return 0;
+}
+
+Questão 2:
