@@ -175,7 +175,37 @@ int main() {
 }
 
 Questão 6:
+#include <iostream>
+using namespace std;
 
+bool Ordena(int v[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        if (v[i] > v[i + 1]) {
+            return false;  
+        }
+    }
+    return true;  
+}
+
+int main() {
+    int n;
+    cout << "Digite o número de elementos do vetor: ";
+    cin >> n;
+
+    int v[n];
+    cout << "Digite os elementos do vetor:\n";
+    for (int i = 0; i < n; i++) {
+        cin >> v[i];
+    }
+
+    if (Ordena(v, n)) {
+        cout << "O vetor está em ordenado.\n";
+    } else {
+        cout << "O vetor não está em ordenado.\n";
+    }
+
+    return 0;
+}
 
 Questão 7:
 
