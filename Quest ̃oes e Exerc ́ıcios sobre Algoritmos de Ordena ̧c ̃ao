@@ -208,13 +208,95 @@ int main() {
 }
 
 Questão 7:
+#include <iostream>
+#include <cmath>
+using namespace std;
 
+double raiz_quadrada(double x) {
+    if (x < 0) return 0.0;
+
+    const double tolerancia = 1e-6;
+
+    double inicio = 0;
+    double fim = x;
+
+    if (x < 1) fim = 1;
+
+    while (fim - inicio > tolerancia) {
+        double meio = (inicio + fim) / 2.0; 
+        double quadrado = meio * meio;      
+
+        if (fabs(quadrado - x) < tolerancia) {
+            return meio;
+        }
+
+        if (quadrado > x) {
+            fim = meio;
+        } else { 
+            inicio = meio;
+        }
+    }
+
+    return (inicio + fim) / 2.0;
+}
+
+int main() {
+    double x;
+
+    cout << "Digite um número: ";
+    cin >> x;
+
+    double resultado = raiz_quadrada(x);
+
+    cout << "A raiz quadrada de " << x << " é aproximadamente " << resultado << endl;
+
+    return 0;
+}
 
 Questão 8:
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
 
+void inserirOrdenado(vector<string>& nomes, const string& novo_nome) {
+    nomes.push_back(novo_nome);
+
+    int i = nomes.size() - 1;
+    while (i > 0 && nomes[i - 1] > nomes[i]) {
+        swap(nomes[i - 1], nomes[i]);
+        i--;
+    }
+}
+
+int main() {
+    vector<string> nomes;  
+    int n;
+    
+    cout << "Quantos nomes deseja inserir? ";
+    cin >> n;
+    cin.ignore(); 
+    
+    for (int i = 0; i < n; i++) {
+        string nome;
+        cout << "Digite o nome " << i + 1 << ": ";
+        getline(cin, nome);  
+        inserirOrdenado(nomes, nome);  
+    }
+
+    cout << "\nNomes em ordem alfabetica:\n";
+    for (const string& nome : nomes) {
+        cout << nome << endl;
+    }
+
+    return 0;
+}
 
 Questão 9:
+a) Quando o algoritmo encontrar dois elementos com a mesma chave, ele pode vir a trocar esses elementos sem considerar a ordem original deles no vetor. Assim muito provavelmente a ordem original em que estavam presentes no vetor será alterada.
 
+b) Não irá funcionar. Já que a função ordMês é instável, isso irá alterar as posições relativas de elementos com o mesmo mês. Mesmo com a aplicação da função ordDia que irá corretamente ordenar os dias, a ordenação dos meses já estará quebrada, assim não tornando possível.
+   Sim é possivel. Se "dia" for considerado um critério secundário, depois de ordenar pelos dias de maneira estável, quando aplicarmos a função ordMes, mesmo sendo não estável, a ordem dos dias se manterá preservada corretamente devido a estabilidade que foi garantida antes.
 
 Parte prática C++
 
