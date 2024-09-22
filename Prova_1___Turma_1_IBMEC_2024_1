@@ -176,3 +176,50 @@ int main(){
 
 Questão 7:
 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+ class Escola {
+public:
+    vector<string> aluno;
+    
+    void adcionaAluno(const string& alunos){
+        aluno.push_back(alunos);
+        cout << alunos << " está matriculado!" << endl;
+    } 
+
+    void removeAluno(const string& alunos){
+        auto it = find(aluno.begin(), aluno.end(), alunos);
+        if(it != aluno.end()){
+            aluno.erase(it);
+            cout << alunos << " teve sua matricula removida." << endl;
+        } else {
+            cout << alunos << " não foi encontrado no sistema." << endl;
+        }
+    }
+    
+    void exibeAluno(){
+        if(aluno.empty()){
+            cout << "Não há alunos matriculados." << endl;
+        } else {
+            cout << "Lista de alunos:" << endl;
+            for(const auto& alunos : this -> aluno) {
+                cout << "- " << alunos << endl;
+            }
+        }
+    }
+};
+
+int main(){
+    Escola escola;
+    escola.adcionaAluno("Gabriel Miler Moura da Silva");
+    cout << endl;
+    escola.exibeAluno();
+    cout << endl;
+    escola.removeAluno("Gabriel Miler Moura da Silva");
+    cout << endl;
+    escola.exibeAluno();
+    return 0;
+}
