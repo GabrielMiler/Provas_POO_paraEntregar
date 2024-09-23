@@ -301,9 +301,13 @@ b) Não irá funcionar. Já que a função ordMês é instável, isso irá alter
 Parte prática C++
 
 Questão 1:
+Código não lida corretamente com casos como <= 0.
 
 Questão 2:
+A variavel "sim" é utilizada antes de ser inicializada, a lógica do loop apenas verifica se os elementos estão em ordem crescente, deve ser alterada para manter o valor de "sim" como 1 somente se a ordem crescente for mantida.
 
 Questão 3:
+O código não se prepara para um possível caso onde o vetor v estejá vazio e ele não nos mostra onde a variavel n foi definida.
 
 Questão 4:
+O código não se prepara para um possível caso onde o vetor esteja vazio.
