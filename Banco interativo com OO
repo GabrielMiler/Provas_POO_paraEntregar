@@ -1,0 +1,204 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class contaBanco {
+public:
+    string cpf;
+    string nome;
+    string endereco;
+    string telefone;
+    double saldo;
+
+    contaBanco(string cpf, string nome, string endereco, string telefone, double saldo = 0.0) {
+        this->cpf = cpf;
+        this->nome = nome;
+        this->endereco = endereco;
+        this->telefone = telefone;
+        this->saldo = saldo;
+    }
+
+    string getCPF() const {
+        return cpf;
+    }
+
+    void mostrarInfo() const {
+        cout << "Nome: " << nome << endl;
+        cout << "CPF: " << cpf << endl;
+        cout << "Endereço: " << endereco << endl;
+        cout << "Telefone: " << telefone << endl;
+        cout << "Saldo: R$ " << saldo << endl;
+    }
+
+    void saque() {
+        double valor;
+        cout << "Quanto deseja sacar: ";
+        cin >> valor;
+        if (valor > saldo) {
+            cout << "Saldo insuficiente." << endl;
+        } else {
+            saldo -= valor;
+            cout << "Saque realizado com sucesso!" << endl;
+            cout << "Saldo atual: R$ " << saldo << endl;
+        }
+    }
+
+    void deposito() {
+        double valor;
+        cout << "Quanto deseja depositar: ";
+        cin >> valor;
+        saldo += valor;
+        cout << "Depósito realizado com sucesso!" << endl;
+        cout << "Saldo atual: R$ " << saldo << endl;
+    }
+
+    void editarInfo() {
+        cout << "Digite o novo nome: ";
+        cin.ignore();
+        getline(cin, nome);
+        cout << "Digite o novo endereço: ";
+        getline(cin, endereco);
+        cout << "Digite o novo telefone: ";
+        cin >> telefone;
+        cout << "Informações atualizadas com sucesso!" << endl;
+    }
+};
+
+class Banco {
+public:
+    vector<contaBanco> contas;
+
+    void criarConta() {
+        string cpf, nome, endereco, telefone;
+        cout << "Digite o CPF: ";
+        cin >> cpf;
+        cout << "Digite o nome: ";
+        cin.ignore();
+        getline(cin, nome);
+        cout << "Digite o endereço: ";
+        getline(cin, endereco);
+        cout << "Digite o telefone: ";
+        cin >> telefone;
+
+        for (const auto& conta : contas) {
+            if (conta.getCPF() == cpf) {
+                cout << "Erro: CPF já cadastrado!" << endl;
+                return;
+            }
+        }
+
+        contas.push_back(contaBanco(cpf, nome, endereco, telefone));
+        cout << "Conta criada com sucesso!" << endl;
+    }
+
+    contaBanco* acessarConta(string cpf) {
+        for (auto& conta : contas) {
+            if (conta.getCPF() == cpf) {
+                return &conta;
+            }
+        }
+        return nullptr;
+    }
+
+    void deletarConta(string cpf) {
+        auto it = remove_if(contas.begin(), contas.end(), [&](contaBanco& conta) {
+            return conta.getCPF() == cpf;
+        });
+        if (it != contas.end()) {
+            contas.erase(it, contas.end());
+            cout << "Conta deletada com sucesso!" << endl;
+        } else {
+            cout << "Conta não encontrada!" << endl;
+        }
+    }
+
+    int showMenu() {
+        int op;
+        cout << "\n--- Menu ---" << endl;
+        cout << "1. Criar conta" << endl;
+        cout << "2. Acessar conta" << endl;
+        cout << "3. Sair" << endl;
+        cout << "Escolha uma opção: ";
+        cin >> op;
+        return op;
+    }
+
+    int selectOperacao() {
+        int op;
+        cout << "\n--- Operações da Conta ---" << endl;
+        cout << "1. Saque" << endl;
+        cout << "2. Depósito" << endl;
+        cout << "3. Editar Informações" << endl;
+        cout << "4. Verificar Informações" << endl;
+        cout << "5. Deletar Conta" << endl;
+        cout << "6. Sair" << endl;
+        cout << "Escolha uma opção: ";
+        cin >> op;
+        return op;
+    }
+};
+
+int main() {
+    Banco banco;
+    int opcaoMenu;
+
+    do {
+        opcaoMenu = banco.showMenu();
+
+        switch (opcaoMenu) {
+        case 1: {
+            banco.criarConta();
+            break;
+        }
+        case 2: {
+            string cpf;
+            cout << "Digite o CPF da conta que deseja acessar: ";
+            cin >> cpf;
+
+            contaBanco* conta = banco.acessarConta(cpf);
+            if (conta == nullptr) {
+                cout << "Conta não encontrada!" << endl;
+            } else {
+                int opcaoConta;
+                do {
+                    opcaoConta = banco.selectOperacao();
+                    switch (opcaoConta) {
+                    case 1:
+                        conta->saque();
+                        break;
+                    case 2:
+                        conta->deposito();
+                        break;
+                    case 3:
+                        conta->editarInfo();
+                        break;
+                    case 4:
+                        conta->mostrarInfo();
+                        break;
+                    case 5:
+                        banco.deletarConta(cpf);
+                        opcaoConta = 6; 
+                        break;
+                    case 6:
+                        cout << "Saindo da conta..." << endl;
+                        break;
+                    default:
+                        cout << "Opção inválida!" << endl;
+                        break;
+                    }
+                } while (opcaoConta != 6);
+            }
+            break;
+        }
+        case 3:
+            cout << "Encerrando o sistema..." << endl;
+            break;
+        default:
+            cout << "Opção inválida!" << endl;
+        }
+    } while (opcaoMenu != 3);
+
+    return 0;
+}
