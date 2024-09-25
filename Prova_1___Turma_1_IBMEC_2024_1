@@ -177,49 +177,77 @@ int main(){
 Questão 7:
 
 #include <iostream>
+#include <algorithm>
 #include <string>
 #include <vector>
-#include <algorithm>
 using namespace std;
- class Escola {
+class CadastroAlunos {
 public:
     vector<string> aluno;
     
-    void adcionaAluno(const string& alunos){
-        aluno.push_back(alunos);
-        cout << alunos << " está matriculado!" << endl;
-    } 
-
-    void removeAluno(const string& alunos){
-        auto it = find(aluno.begin(), aluno.end(), alunos);
+    void adicionarAluno(string nome){
+        aluno.push_back(nome);
+        cout << nome << " foi matriculado." << endl;
+    }
+    
+    void removerAluno(string nome){
+        auto it = find(aluno.begin(),aluno.end(),nome);
         if(it != aluno.end()){
             aluno.erase(it);
-            cout << alunos << " teve sua matricula removida." << endl;
+            cout << nome << " foi expulso" << endl;
         } else {
-            cout << alunos << " não foi encontrado no sistema." << endl;
+            cout << nome << " não encontrado no sistema." << endl;
         }
     }
     
-    void exibeAluno(){
+    void mostrarAluno(){
         if(aluno.empty()){
-            cout << "Não há alunos matriculados." << endl;
+            cout << "Não há alunos." << endl;
         } else {
-            cout << "Lista de alunos:" << endl;
-            for(const auto& alunos : this -> aluno) {
-                cout << "- " << alunos << endl;
+            cout << "Lista de alunos: " << endl;
+            for(string nome : aluno){
+                cout << "- " << nome << endl;
             }
         }
     }
 };
 
-int main(){
-    Escola escola;
-    escola.adcionaAluno("Gabriel Miler Moura da Silva");
-    cout << endl;
-    escola.exibeAluno();
-    cout << endl;
-    escola.removeAluno("Gabriel Miler Moura da Silva");
-    cout << endl;
-    escola.exibeAluno();
+int main() {
+    CadastroAlunos cadastro;
+    
+    int op;
+    string nome;
+    do{
+        cout <<"\n Menu:" << endl;
+        cout <<"1. Adcionar Aluno" << endl;
+        cout <<"2. Remover" << endl;
+        cout <<"3. Exibir lista de alunos" << endl;
+        cout <<"4. Sair" << endl;
+        cout <<"Escolha uma opção: ";
+        cin >> op;
+        
+        switch(op){
+            case 1:
+                cout <<"Digite o nome do aluno: " << endl;
+                cin.ignore();
+                getline(cin,nome);
+                cadastro.adicionarAluno(nome);
+                break;
+            case 2:
+                cout <<"Digite o nome do aluno para ser removido: " << endl;
+                cin.ignore();
+                getline(cin,nome);
+                cadastro.removerAluno(nome);
+                break;
+            case 3:
+                cadastro.mostrarAluno();
+                break;
+            case 4:
+                cout <<"Saindo do programa..." << endl;
+            default:
+                cout <<"Opção inválida, tente novamente." << endl;
+        }
+    } while(op != 4);
+    
     return 0;
 }
