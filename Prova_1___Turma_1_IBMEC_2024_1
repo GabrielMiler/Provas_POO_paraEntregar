@@ -32,35 +32,34 @@ int main()
 Questão 3:
 
 #include <iostream>
-#include <sstream>
+#include <string>
+#include <cctype> 
 using namespace std;
-bool eTautograma(string frase){
-    stringstream ss(frase);
-    string palavra;
-    char letraInicial;
-    bool primeiraPalavra = true;
-    while (ss >> palavra) {
-        char letraAtual = tolower(palavra[0]);
-        if (primeiraPalavra) {
-            letraInicial = letraAtual;
-            primeiraPalavra = false;
-        } else {
-            if (letraAtual != letraInicial) {
-                return false; 
+
+int main() {
+    
+    string frase;
+    
+    while (getline(cin, frase)) {
+        
+        char letra_inicial = tolower(frase[0]); 
+        bool tautograma = true; 
+
+        for (int i = 1; i < frase.size(); i++) {
+            if (frase[i] == ' ' && tolower(frase[i + 1])) {
+                if (tolower(frase[i + 1]) != letra_inicial) {
+                    tautograma = false; 
+                    break;
+                }
             }
         }
+
+        if (tautograma)
+            cout << 'Y' << endl;
+        else
+            cout << 'N' << endl;
     }
-    return true; 
-}
-int main()
-{
-    string frase;
-    getline(cin,frase);
-    if (eTautograma(frase)) {
-        cout << 'Y' << endl;
-    } else {
-        cout << 'N' << endl;
-    }
+
     return 0;
 }
 
