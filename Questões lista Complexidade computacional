@@ -1,0 +1,46 @@
+Questão 1:
+Complexidade de tempo de um algoritimos é a quantificação da porção de tempo que leva para um algoritmo rodar em função do tamanho da entrada.
+
+Questão 2:
+Significa que em seu pior caso, o tempo de execução desse algoritimo crescerá proporcionalmente ao quadrado do número de elementos de entrada (n).
+
+Questão 3:
+Um algoritmo que tenha complexidade de tempo O(1) seu tempo de execução não irá variar em relação ao tamanho da entrada, isso se deve ao fato de que seu tempo de execução é constante, ou seja, ele não irá variar. 
+
+Questão 4:
+A diferença dessas notações é que O(n) representa o limite superior assintónico, pior caso possível, e o Ω(n) representa o limite inferior assintónico, o melhor caso possível.
+
+Questão 5:
+Merge Sort.
+
+Questão 6:
+Isso significa que o algoritmo utiliza uma quantidade de memória adicional proporcional ao tamanho da entrada n. 
+
+Questão 7:
+A importância de considerar a complexidade de tempo ao escolher um algoritmo se dá para que possamos garantir que a solução proposta seja eficiente, escalável e adequada às exigências do problema e do ambiente de execução. A escolha de um algoritmo adequado pode afetar não apenas o desempenho imediato, mas também a viabilidade do sistema a longo prazo.
+
+Questão 8:
+A complexidade de tempo dessa busca será O(n). Pois a busca linear percorre a lista elemento por elemento até identificar o que está procurando, e se ela está desordenada o algoritmo não tem nenhuma informação que permita otimizar a busca, o que resulta no pior cenário.
+
+Questão 9:
+O(n!) significa que o tempo de execução do algoritmo cresce fatorialmente em relação ao tamanho da entrada n. Problema do Caixeiro Viajante.
+
+Questão 10:
+A diferença maior na eficiencia está presente na diferença do crescimento deles, com A tendo um crescimento linear mais eficiente e B um crescimento quadratico bem mais lento.
+
+
+Exercícios Práticos em C++
+Questão 1:
+n * O(1) = O(n). O for será executado n vezes e dentro dele temos "std :: cout << i << std :: endl ;" que é uma operação constante O(1).
+
+Questão 2:
+n * n * O(1) = O(n^2). O primeiro for será executado n vezes e cada execução dele o segundo for será executado n vezes também, e dentro do segundo for temos "std::cout << i * j << std::endl;" que é uma operação constante O(1).
+
+Questão 3:
+O(log2(n)) * O(1) = O(log2(n)). O crescimento de i é exponencial, dobrando toda vez até não ser mais menor que n, o que se traduz para a inequação [k - 1 < log2(n)] ou [k < log2(n) + 1] ou [2^(k-1) < n] e nos dá aproximadamente O(log2(n)) e "std::cout << i << std::endl;" é uma operação constante O(1).
+
+Questão 4:
+O(log n). Isso se deve ao fato de que, a cada iteração do loop, o algoritmo elimina metade dos elementos restantes da busca. Essa redução exponencial do espaço de busca resulta em um tempo de execução que cresce de forma logarítmica em relação ao tamanho da entrada n. Esse comportamento torna a busca binária um método altamente eficiente para pesquisa em arrays ordenados.
+
+Questão 5
+O(n^2). Porque para cada iteração do loop externo que executa n vezes, o loop interno executa um número de iterações que varia de 0 até i, resultando em um total de iterações que é proporcional ao quadrado do tamanho da entrada n. Assim, à medida que n aumenta, o tempo de execução do algoritmo cresce quadráticamente.
