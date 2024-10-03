@@ -1,0 +1,66 @@
+#include <iostream>
+using namespace std;
+class Animal {
+public:
+    string especie;
+    string dieta;
+    string tamanho;
+    string peso;
+    
+    Animal(string especie, string dieta, string tamanho, string peso){
+        this ->especie = especie;
+        this ->dieta = dieta;
+        this ->tamanho = tamanho;
+        this ->peso = peso;
+    }
+    
+    string getEspecie(){
+        return this ->especie;
+    }
+    
+    string getDieta(){
+        return this ->dieta;
+    }
+    
+    string getTamanho(){
+        return this ->tamanho;
+    }
+    
+    string getPeso(){
+        return this ->peso;
+    }
+    
+};
+
+class Gato : public Animal {
+    public:
+    string dormir;
+    
+    Gato(string especie, string dieta, string tamanho, string peso, string dormir) :Animal(especie,dieta,tamanho,peso){
+        this ->dormir = dormir;
+    }
+    string getDormir(){
+        return this ->dormir;
+    }
+};
+
+class Cachorro : public Animal {
+    public:
+    string brincar;
+    
+    Cachorro(string especie, string dieta, string tamanho, string peso, string brincar) :Animal(especie,dieta,tamanho,peso){
+        this ->brincar = brincar;
+    }
+    string getBrincar(){
+        return this ->brincar;
+    }
+    
+};
+int main()
+{
+    Gato kitty = Gato ("Sphynx","Carnivoro","24cm","12kg","Dorme por 12 horas");
+    Cachorro dog = Cachorro ("Poodle","Carnivoro","120cm", "32kg", "Brincadeira favorita é Frisbe");
+    cout << "Especie do Gato:" << kitty.getEspecie() << " Dieta:" << kitty.getDieta() << " Tamanho:" << kitty.getTamanho() << " Peso:" << kitty.getPeso() << " Dorme por:" << kitty.getDormir() << endl;
+    cout << "Especie do Cachorro: " << dog.getEspecie() << " Dieta:" << dog.getDieta() << " Tamanho:" << dog.getTamanho() << " Peso:" << dog.getPeso() << " Brincadeira favorita:" << dog.getBrincar() << endl;
+    return 0;
+}
