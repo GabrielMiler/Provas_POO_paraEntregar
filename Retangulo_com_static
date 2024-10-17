@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+class Retangulo {
+    public:
+    static int comprimento;
+    static int largura;
+    Retangulo(){
+        cout << "Largura = " << largura << endl;
+        cout << "Comprimento = " << comprimento << endl;
+    }
+    void area(){
+        int area;
+        area = comprimento * largura;
+        cout << "Area = " << area << endl;
+    }
+    void perimetro(){
+        int perimetro;
+        perimetro = comprimento + largura;
+        cout << "Perimetro = " << perimetro << endl;
+    }
+    
+};
+
+int Retangulo::comprimento = 10;
+int Retangulo::largura = 15;
+int main(){
+    Retangulo ret;
+    ret.perimetro();
+    ret.area();
+
+    return 0;
+}
