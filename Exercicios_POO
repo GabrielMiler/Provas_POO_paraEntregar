@@ -1,0 +1,491 @@
+1)
+#include <iostream>
+#include <string>
+using namespace std;
+class Pessoa {
+private:
+    string nome;
+    int idade;
+public:
+    void setNome(const string& n) {
+        nome = n;
+    }
+    string getNome() const {
+        return nome;
+    }
+    void setIdade(int i) {
+        idade = i;
+    }
+    int getIdade() const {
+        return idade;
+    }
+};
+int main() {
+    Pessoa pessoa;
+    pessoa.setNome("Gabriel");
+    pessoa.setIdade(19);
+    cout << "Nome: " << pessoa.getNome() << endl;
+    cout << "Idade: " << pessoa.getIdade() << endl;
+    return 0;
+}
+
+2)
+#include <iostream>
+#include <string>
+using namespace std;
+class Livro {
+private:
+    string titulo;
+    string autor;
+    int anoPublicacao;
+public:
+    Livro(const string& t, const string& a, int ano) {
+        titulo = t;
+        autor = a;
+        anoPublicacao = ano;
+    }
+    void exibirInformacoes() const {
+        cout << "Titulo: " << titulo << endl;
+        cout << "Autor: " << autor << endl;
+        cout << "Ano de Publicacao: " << anoPublicacao << endl;
+    }
+};
+int main() {
+    Livro livro("O Senhor dos Aneis", "J.R.R. Tolkien", 1954);
+    Livro livro2("Animal Farm", "George Orwell", 1945);
+    cout << "Informações do primeiro livro: " << endl;
+    livro.exibirInformacoes();
+    cout << "Informações do segundo livro: " << endl;
+    livro2.exibirInformacoes();
+    return 0;
+}
+
+3)
+#include <iostream>
+#include <string>
+using namespace std;
+class ContaBancaria {
+private:
+    int numeroConta;
+    double saldo;
+    string titular;
+public:
+    ContaBancaria(int numero, const string& nomeTitular, double saldoInicial = 0.0) {
+        numeroConta = numero;
+        titular = nomeTitular;
+        saldo = saldoInicial;
+    }
+    void setNumeroConta(int numero) {
+        numeroConta = numero;
+    }
+    int getNumeroConta() const {
+        return numeroConta;
+    }
+    void setTitular(const string& nomeTitular) {
+        titular = nomeTitular;
+    }
+    string getTitular() const {
+        return titular;
+    }
+    void setSaldo(double valor) {
+        saldo = valor;
+    }
+    double getSaldo() const {
+        return saldo;
+    }
+    void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+            cout << "Depósito de R$ " << valor << " realizado com sucesso." << endl;
+        } else {
+            cout << "Valor de depósito inválido!" << endl;
+        }
+    }
+    void sacar(double valor) {
+        if (valor > 0 && valor <= saldo) {
+            saldo -= valor;
+            cout << "Saque de R$ " << valor << " realizado com sucesso." << endl;
+        } else if (valor > saldo) {
+            cout << "Saldo insuficiente para realizar o saque." << endl;
+        } else {
+            cout << "Valor de saque inválido!" << endl;
+        }
+    }
+    void exibirInformacoes() const {
+        cout << "Numero da Conta: " << numeroConta << endl;
+        cout << "Titular: " << titular << endl;
+        cout << "Saldo: R$ " << saldo << endl;
+    }
+};
+int main() {
+    ContaBancaria conta(345677, "Gabriel Miler", 3850.0);
+    conta.exibirInformacoes();
+    conta.depositar(225.0);
+    conta.sacar(912.0);
+    conta.sacar(1500.0); 
+    conta.exibirInformacoes();
+    return 0;
+}
+
+4)
+#include <iostream>
+#include <string>
+using namespace std;
+class Aluno {
+private:
+    string nome;
+    int matricula;
+    float nota;
+public:
+    void setNome(const string& n) {
+        nome = n;
+    }
+
+    void setMatricula(int m) {
+        matricula = m;
+    }
+    void setNota(float n) {
+        nota = n;
+    }
+    string getNome() const {
+        return nome;
+    }
+
+    int getMatricula() const {
+        return matricula;
+    }
+
+    float getNota() const {
+        return nota;
+    }
+    void mostrarDados() const {
+        cout << "Nome: " << nome << endl;
+        cout << "Matricula: " << matricula << endl;
+        cout << "Nota: " << nota << endl;
+    }
+};
+int main() {
+    Aluno aluno;
+    aluno.setNome("Geraldo Andrade");
+    aluno.setMatricula(202402399);
+    aluno.setNota(9.6);
+    aluno.mostrarDados();
+    Aluno aluno2;
+    aluno2.setNome("Gabriel Miler");
+    aluno2.setMatricula(202400128);
+    aluno2.setNota(5.1);
+    aluno2.mostrarDados();
+    return 0;
+}
+
+5)
+#include <iostream>
+#include <string>
+using namespace std;
+class Produto {
+private:
+    string nome;
+    double preco;
+    int quantidadeEstoque;
+public:
+    void setNome(const string& n) {
+        nome = n;
+    }
+    void setPreco(double p) {
+        preco = p;
+    }
+    void setQuantidadeEstoque(int q) {
+        quantidadeEstoque = q;
+    }
+    string getNome() const {
+        return nome;
+    }
+
+    double getPreco() const {
+        return preco;
+    }
+
+    int getQuantidadeEstoque() const {
+        return quantidadeEstoque;
+    }
+    void reporEstoque(int quantidade) {
+        if (quantidade > 0) {
+            quantidadeEstoque += quantidade;
+            cout << "Foram repostos " << quantidade << " unidades ao estoque." << endl;
+        } else {
+            cout << "Quantidade inválida para reposição!" << endl;
+        }
+    }
+    void retirarEstoque(int quantidade) {
+        if (quantidade > 0 && quantidade <= quantidadeEstoque) {
+            quantidadeEstoque -= quantidade;
+            cout << "Foram retirados " << quantidade << " unidades do estoque." << endl;
+        } else if (quantidade > quantidadeEstoque) {
+            cout << "Estoque insuficiente para retirar a quantidade solicitada." << endl;
+        } else {
+            cout << "Quantidade inválida para retirada!" << endl;
+        }
+    }
+    void mostrarInformacoes() const {
+        cout << "Produto: " << nome << endl;
+        cout << "Preco: R$ " << preco << endl;
+        cout << "Quantidade em estoque: " << quantidadeEstoque << " unidades" << endl;
+    }
+};
+int main() {
+    Produto produto;
+    produto.setNome("Kindle");
+    produto.setPreco(1500.00);
+    produto.setQuantidadeEstoque(50);
+    produto.mostrarInformacoes();
+    produto.reporEstoque(20);
+    produto.retirarEstoque(10);
+    produto.retirarEstoque(100);  
+    produto.mostrarInformacoes();
+    return 0;
+}
+
+6)
+#include <iostream>
+#include <string>
+using namespace std;
+class Carro {
+private:
+    string marca;
+    string modelo;
+    int ano;
+public:
+    void setMarca(const string& m) {
+        marca = m;
+    }
+
+    void setModelo(const string& mod) {
+        modelo = mod;
+    }
+    void setAno(int a) {
+        ano = a;
+    }
+    string getMarca() const {
+        return marca;
+    }
+    string getModelo() const {
+        return modelo;
+    }
+    int getAno() const {
+        return ano;
+    }
+    void exibirDetalhes() const {
+        cout << "Marca: " << marca << endl;
+        cout << "Modelo: " << modelo << endl;
+        cout << "Ano: " << ano << endl;
+    }
+};
+int main() {
+    Carro carro;
+    carro.setMarca("Toyota");
+    carro.setModelo("Etios");
+    carro.setAno(2018);
+    carro.exibirDetalhes();
+    Carro carro2;
+    carro2.setMarca("Honda");
+    carro2.setModelo("Civic");
+    carro2.setAno(2021);
+    carro2.exibirDetalhes();
+    return 0;
+}
+
+7)
+#include <iostream>
+#include <string>
+using namespace std;
+class Funcionario {
+private:
+    string nome;
+    string cargo;
+    double salario;
+public:
+    void setNome(const string& n) {
+        nome = n;
+    }
+    void setCargo(const string& c) {
+        cargo = c;
+    }
+    void setSalario(double s) {
+        salario = s;
+    }
+    string getNome() const {
+        return nome;
+    }
+    string getCargo() const {
+        return cargo;
+    }
+    double getSalario() const {
+        return salario;
+    }
+    void aumentarSalario(double percentual) {
+        if (percentual > 0) {
+            salario += salario * (percentual / 100);
+            cout << "Salário aumentado em " << percentual << "%." << endl;
+        } else {
+            cout << "Percentual inválido!" << endl;
+        }
+    }
+    void exibirInformacoes() const {
+        cout << "Nome: " << nome << endl;
+        cout << "Cargo: " << cargo << endl;
+        cout << "Salário: R$ " << salario << endl;
+    }
+};
+int main() {
+    Funcionario funcionario1;
+    funcionario1.setNome("Gabriel Miler");
+    funcionario1.setCargo("Engenhario de Software");
+    funcionario1.setSalario(6750.00);
+    funcionario1.exibirInformacoes();
+    funcionario1.aumentarSalario(10);
+    funcionario1.exibirInformacoes();
+    return 0;
+}
+
+8)
+#include <iostream>
+using namespace std;
+class Caixa {
+private:
+    double comprimento;
+    double largura;
+    double altura;
+public:
+    void setComprimento(double c) {
+        comprimento = c;
+    }
+    void setLargura(double l) {
+        largura = l;
+    }
+    void setAltura(double a) {
+        altura = a;
+    }
+    friend double calcularVolume(Caixa &c);
+};
+double calcularVolume(Caixa &c) {
+    return c.comprimento * c.largura * c.altura;
+}
+int main() {
+    Caixa caixa;
+    caixa.setComprimento(10.0);
+    caixa.setLargura(6.0);
+    caixa.setAltura(8.0);
+    double volume = calcularVolume(caixa1);
+    cout << "O volume da caixa é: " << volume << " unidades cúbicas" << endl;
+    return 0;
+}
+
+9)
+#include <iostream>
+#include <cmath>  
+using namespace std;
+class Ponto {
+private:
+    double x;
+    double y;
+public:
+    Ponto(double _x = 0.0, double _y = 0.0) : x(_x), y(_y) {}
+    void setX(double _x) {
+        x = _x;
+    }
+    void setY(double _y) {
+        y = _y;
+    }
+    double getX() const {
+        return x;
+    }
+    double getY() const {
+        return y;
+    }
+    friend class Linha;
+};
+class Linha {
+private:
+    Ponto ponto;
+    Ponto ponto2;
+public:
+    Linha(Ponto _ponto, Ponto _ponto2) : ponto(_ponto), ponto2(_ponto2) {}
+    friend double calcularComprimento(Linha &l);
+};
+double calcularComprimento(Linha &l) {
+    double deltaX = l.ponto2.getX() - l.ponto.getX();
+    double deltaY = l.ponto2.getY() - l.ponto.getY();
+    return sqrt(deltaX * deltaX + deltaY * deltaY);  
+}
+int main() {
+    Ponto p1(2.0, 4.0);
+    Ponto p2(9.0, 12.0);
+    Linha linha(p1, p2);
+    double comprimento = calcularComprimento(linha);
+    cout << "O comprimento da linha é: " << comprimento << endl;
+    return 0;
+}
+
+10)
+#include <iostream>
+using namespace std;
+class NumeroComplexo {
+private:
+    double real;
+    double imag;
+public:
+    NumeroComplexo(double r = 0.0, double i = 0.0) : real(r), imag(i) {}
+    void setReal(double r) {
+        real = r;
+    }
+    void setImag(double i) {
+        imag = i;
+    }
+    double getReal() const {
+        return real;
+    }
+    double getImag() const {
+        return imag;
+    }
+    friend NumeroComplexo somar(NumeroComplexo &a, NumeroComplexo &b);
+    void exibir() const {
+        cout << real << " + " << imag << "i" << endl;
+    }
+};
+NumeroComplexo somar(NumeroComplexo &a, NumeroComplexo &b) {
+    return NumeroComplexo(a.real + b.real, a.imag + b.imag);
+}
+int main() {
+    NumeroComplexo num(2.0, 3.0);
+    NumeroComplexo num2(4.5, 6.5);
+    cout << "Primeiro número complexo: ";
+    num.exibir();
+    cout << "Segundo número complexo: ";
+    num2.exibir();
+    NumeroComplexo resultado = somar(num1, num2);
+    cout << "Soma dos números complexos: ";
+    resultado.exibir();
+    return 0;
+}
+
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
