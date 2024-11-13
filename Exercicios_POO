@@ -1091,6 +1091,218 @@ int main() {
 }
 
 31)
+#include <iostream>
+using namespace std;
+class Vetor3D {
+private:
+    float x, y, z;
+public:
+    Vetor3D(float x = 0.0, float y = 0.0, float z = 0.0) : x(x), y(y), z(z) {}
+    bool operator==(const Vetor3D& outro) const {
+        return (x == outro.x && y == outro.y && z == outro.z);
+    }
+    void exibir() const {
+        cout << "Vetor(" << x << ", " << y << ", " << z << ")" << endl;
+    }
+};
+int main() {
+    Vetor3D vetor(9.0, 2.0, 3.0);
+    Vetor3D vetor2(1.0, 2.0, 3.0);
+    if (vetor == vetor2) {
+        cout << "Os vetores são iguais." << endl;
+    } else {
+        cout << "Os vetores são diferentes." << endl;
+    }
 
+    return 0;
+}
 
 //Biblioteca
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+class ItemBiblioteca {
+protected:
+    string titulo;
+    int ano;
+public:
+    ItemBiblioteca(const string& titulo = "", int ano = 0) : titulo(titulo), ano(ano) {}
+    void setTitulo(const string& titulo) { this->titulo = titulo; }
+    string getTitulo() const { return titulo; }
+    void setAno(int ano) { this->ano = ano; }
+    int getAno() const { return ano; }
+    virtual void exibirDetalhes() const = 0; 
+    virtual ~ItemBiblioteca() {}
+};
+class Livro : public ItemBiblioteca {
+private:
+    string autor;
+public:
+    Livro(const string& titulo, int ano, const string& autor) : ItemBiblioteca(titulo, ano), autor(autor) {}
+
+    void setAutor(const string& autor) { this->autor = autor; }
+    string getAutor() const { return autor; }
+
+    void exibirDetalhes() const override {
+        cout << "Livro - Titulo: " << titulo << ", Ano: " << ano << ", Autor: " << autor << endl;
+    }
+
+    bool operator==(const Livro& outro) const {
+        return (titulo == outro.titulo && autor == outro.autor);
+    }
+};
+class Revista : public ItemBiblioteca {
+private:
+    int edicao;
+public:
+    Revista(const string& titulo, int ano, int edicao) : ItemBiblioteca(titulo, ano), edicao(edicao) {}
+
+    void setEdicao(int edicao) { this->edicao = edicao; }
+    int getEdicao() const { return edicao; }
+
+    void exibirDetalhes() const override {
+        cout << "Revista - Titulo: " << titulo << ", Ano: " << ano << ", Edicao: " << edicao << endl;
+    }
+};
+class Biblioteca {
+private:
+    vector<ItemBiblioteca*> itens;
+public:
+    ~Biblioteca() {
+        for (auto item : itens) {
+            delete item;
+        }
+    }
+
+    void adicionarItem(ItemBiblioteca* item) {
+        itens.push_back(item);
+    }
+
+    void exibirTodosItens() const {
+        for (const auto& item : itens) {
+            item->exibirDetalhes();
+        }
+    }
+
+    friend void removerItemPorTitulo(Biblioteca& biblioteca, const string& titulo);
+};
+void removerItemPorTitulo(Biblioteca& biblioteca, const string& titulo) {
+    for (auto it = biblioteca.itens.begin(); it != biblioteca.itens.end(); ++it) {
+        if ((*it)->getTitulo() == titulo) {
+            delete *it;
+            biblioteca.itens.erase(it);
+            cout << "Item com o título '" << titulo << "' foi removido." << endl;
+            return;
+        }
+    }
+    cout << "Item com o título '" << titulo << "' não encontrado." << endl;
+}
+int main() {
+    Biblioteca biblioteca;
+    biblioteca.adicionarItem(new Livro("O Senhor dos Aneis", 1954, "J.R.R. Tolkien"));
+    biblioteca.adicionarItem(new Livro("Harry Potter", 1997, "J.K. Rowling"));
+    biblioteca.adicionarItem(new Revista("National Geographic", 2023, 12));
+    biblioteca.adicionarItem(new Revista("Revista Cientifica", 2022, 7));
+    cout << "Itens na biblioteca:" << endl;
+    biblioteca.exibirTodosItens();
+    cout << "\nRemovendo o item 'Harry Potter':" << endl;
+    removerItemPorTitulo(biblioteca, "Harry Potter");
+    cout << "\nItens restantes na biblioteca:" << endl;
+    biblioteca.exibirTodosItens();
+    return 0;
+}
+
+//Funcionários
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+class Funcionario {
+private:
+    string nome;
+    double salario;
+public:
+    Funcionario(const string& nome = "", double salario = 0.0) : nome(nome), salario(salario) {}
+    void setNome(const string& nome) { this->nome = nome; }
+    string getNome() const { return nome; }
+    void setSalario(double salario) { this->salario = salario; }
+    double getSalario() const { return salario; }
+    virtual double calcularPagamento() const = 0; 
+    virtual ~Funcionario() {}
+    bool operator<(const Funcionario& outro) const {
+        return salario < outro.salario;
+    }
+};
+class Gerente : public Funcionario {
+private:
+    double bonus;
+public:
+    Gerente(const string& nome, double salario, double bonus) : Funcionario(nome, salario), bonus(bonus) {}
+
+    void setBonus(double bonus) { this->bonus = bonus; }
+    double getBonus() const { return bonus; }
+
+    double calcularPagamento() const override {
+        return getSalario() + bonus;
+    }
+};
+class Engenheiro : public Funcionario {
+private:
+    int projetos;
+    static const double valorPorProjeto;
+
+public:
+    Engenheiro(const string& nome, double salario, int projetos) : Funcionario(nome, salario), projetos(projetos) {}
+
+    void setProjetos(int projetos) { this->projetos = projetos; }
+    int getProjetos() const { return projetos; }
+
+    double calcularPagamento() const override {
+        return getSalario() + projetos * valorPorProjeto;
+    }
+};
+const double Engenheiro::valorPorProjeto = 1000.0;
+class Empresa {
+private:
+    vector<Funcionario*> funcionarios;
+public:
+    ~Empresa() {
+        for (auto func : funcionarios) {
+            delete func;
+        }
+    }
+    void adicionarFuncionario(Funcionario* func) {
+        funcionarios.push_back(func);
+    }
+    void exibirPagamentosTotais() const {
+        for (const auto& func : funcionarios) {
+            cout << "Pagamento total para " << func->getNome() << ": " << func->calcularPagamento() << endl;
+        }
+    }
+    friend void aumentarSalarioPorNome(Empresa& empresa, const string& nome, double aumento);
+};
+void aumentarSalarioPorNome(Empresa& empresa, const string& nome, double aumento) {
+    for (auto& func : empresa.funcionarios) {
+        if (func->getNome() == nome) {
+            func->setSalario(func->getSalario() + aumento);
+            cout << "Salário de " << nome << " aumentado em " << aumento << endl;
+            return;
+        }
+    }
+    cout << "Funcionário com o nome '" << nome << "' não encontrado." << endl;
+}
+int main() {
+    Empresa empresa;
+    empresa.adicionarFuncionario(new Gerente("Alice", 7000, 2000));
+    empresa.adicionarFuncionario(new Engenheiro("Bob", 5000, 3));
+    empresa.adicionarFuncionario(new Engenheiro("Carlos", 5500, 5));
+    empresa.adicionarFuncionario(new Gerente("Diana", 8000, 2500));
+    cout << "Pagamentos totais dos funcionários:" << endl;
+    empresa.exibirPagamentosTotais();
+    cout << "\nAumentando o salário de 'Bob':" << endl;
+    aumentarSalarioPorNome(empresa, "Bob", 500);
+    cout << "\nPagamentos totais dos funcionários após o aumento:" << endl;
+    empresa.exibirPagamentosTotais();
+    return 0;
+}
