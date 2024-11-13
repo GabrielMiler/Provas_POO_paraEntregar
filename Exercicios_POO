@@ -759,15 +759,338 @@ int main() {
 }
 
 21)
+#include <iostream>
+using namespace std;
+class Calculadora {
+public:
+    static double somar(double a, double b) {
+        return a + b;
+    }
+    static double subtrair(double a, double b) {
+        return a - b;
+    }
+    static double multiplicar(double a, double b) {
+        return a * b;
+    }
+    static double dividir(double a, double b) {
+        if (b != 0) {
+            return a / b;
+        } else {
+            cout << "Erro: Divisão por zero!" << endl;
+            return 0; 
+        }
+    }
+};
+int main() {
+    double a = 20.0;
+    double b = 7.0;
+    cout << "Soma de " << a << " + " << b << " = " << Calculadora::somar(a, b) << endl;
+    cout << "Subtração de " << a << " - " << b << " = " << Calculadora::subtrair(a, b) << endl;
+    cout << "Multiplicação de " << a << " * " << b << " = " << Calculadora::multiplicar(a, b) << endl;
+    cout << "Divisão de " << a << " / " << b << " = " << Calculadora::dividir(a, b) << endl;
+    return 0;
+}
+
+22)
+#include <iostream>
+using namespace std;
+class ConversorTemperatura {
+public:
+    static double celsiusParaFahrenheit(double celsius) {
+        return (celsius * 9.0 / 5.0) + 32.0;
+    }
+    static double fahrenheitParaCelsius(double fahrenheit) {
+        return (fahrenheit - 32.0) * 5.0 / 9.0;
+    }
+};
+int main() {
+    double celsius = 33.0;
+    double fahrenheit = 81.0;
+    cout << celsius << " graus Celsius em Fahrenheit = " 
+         << ConversorTemperatura::celsiusParaFahrenheit(celsius) << " F" << endl;
+    cout << fahrenheit << " graus Fahrenheit em Celsius = " 
+         << ConversorTemperatura::fahrenheitParaCelsius(fahrenheit) << " C" << endl;
+    return 0;
+}
+
+23)
+#include <iostream>
+#include <string>
+#include <algorithm> 
+using namespace std;
+class UtilidadesString {
+public:
+    static int contarCaracteres(const string &str) {
+        return str.size(); 
+    }
+    static void toUpperCase(string &str) {
+        transform(str.begin(), str.end(), str.begin(), ::toupper);
+    }
+    static void toLowerCase(string &str) {
+        transform(str.begin(), str.end(), str.begin(), ::tolower);
+    }
+};
+int main() {
+    string texto = "Bom dia amigos!!!";
+    int numCaracteres = UtilidadesString::contarCaracteres(texto);
+    cout << "Número de caracteres: " << numCaracteres << endl;
+    UtilidadesString::toUpperCase(texto);
+    cout << "Texto em maiúsculas: " << texto << endl;
+    UtilidadesString::toLowerCase(texto);
+    cout << "Texto em minúsculas: " << texto << endl;
+    return 0;
+}
+
+24)
+#include <iostream>
+using namespace std;
+class GeradorID {
+private:
+    static int ultimoID;
+public:
+    static int gerarNovoID() {
+        return ++ultimoID; 
+    }
+};
+int GeradorID::ultimoID = 0;
+int main() {
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    cout << "Novo ID gerado: " << GeradorID::gerarNovoID() << endl;
+    return 0;
+}
+
+25)
+#include <iostream>
+#include <string>
+using namespace std;
+class BancoDados {
+private:
+    static bool conectado;
+public:
+    static void conectar(const string &connectionString) {
+        if (!conectado) {
+            cout << "Conectando ao banco de dados com a string de conexão: " << connectionString << endl;
+            conectado = true;
+            cout << "Conexão estabelecida com sucesso!" << endl;
+        } else {
+            cout << "Já está conectado ao banco de dados!" << endl;
+        }
+    }
+    static void desconectar() {
+        if (conectado) {
+            cout << "Desconectando do banco de dados..." << endl;
+            conectado = false;
+            cout << "Desconectado com sucesso!" << endl;
+        } else {
+            cout << "Nenhuma conexão ativa para desconectar!" << endl;
+        }
+    }
+};
+bool BancoDados::conectado = false;
+int main() {
+    string connectionString = "Servidor=localhost;BancoDados=meuDB;Usuario=admin;Senha=12345";
+    BancoDados::conectar(connectionString);
+    BancoDados::conectar(connectionString);
+    BancoDados::desconectar();
+    BancoDados::desconectar();
+    return 0;
+}
+
+26)
+#include <iostream>
+#include <cmath> 
+using namespace std;
+class Forma {
+public:
+    virtual double area() const = 0;  
+};
+class Circulo : public Forma {
+private:
+    double raio;
+public:
+    Circulo(double r) : raio(r) {}
+    double area() const override {
+        return M_PI * raio * raio;
+    }
+};
+class Retangulo : public Forma {
+private:
+    double largura;
+    double altura;
+public:
+    Retangulo(double l, double a) : largura(l), altura(a) {}
+    double area() const override {
+        return largura * altura;
+    }
+};
+int main() {
+    Forma* forma = new Circulo(5.0);  
+    Forma* forma2 = new Retangulo(4.0, 6.0);
+    cout << "Área do círculo: " << forma->area() << endl;
+    cout << "Área do retângulo: " << forma2->area() << endl;
+    delete forma;
+    delete forma2;
+    return 0;
+}
+
+27)
+#include <iostream>
+using namespace std;
+class Instrumento {
+public:
+    virtual void tocar() const = 0;
+};
+class Violao : public Instrumento {
+public:
+    void tocar() const override {
+        cout << "Tocando violão: Strum strum" << endl;
+    }
+};
+class Piano : public Instrumento {
+public:
+    void tocar() const override {
+        cout << "Tocando piano: Plin plin plon" << endl;
+    }
+};
+int main() {
+    Instrumento* violao = new Violao();
+    Instrumento* piano = new Piano();
+    violao->tocar();
+    piano->tocar();
+    delete violao;
+    delete piano;
+    return 0;
+}
+
+28)
+#include <iostream>
+using namespace std;
+class Funcionario {
+public:
+    virtual double calcularSalario() const = 0;  
+};
+class Desenvolvedor : public Funcionario {
+private:
+    double salarioBase;
+    double bonus;
+public:
+    Desenvolvedor(double salarioBase, double bonus) : salarioBase(salarioBase), bonus(bonus) {}
+    double calcularSalario() const override {
+        return salarioBase + bonus;
+    }
+};
+class Designer : public Funcionario {
+private:
+    double salarioBase;
+    double comissao;
+public:
+    Designer(double salarioBase, double comissao) : salarioBase(salarioBase), comissao(comissao) {}
+    double calcularSalario() const override {
+        return salarioBase + comissao;
+    }
+};
+int main() {
+    Funcionario* dev = new Desenvolvedor(6250.0, 1150.0);  
+    Funcionario* des = new Designer(3920.0, 1800.0);
+    cout << "Salário do desenvolvedor: " << dev->calcularSalario() << endl;
+    cout << "Salário do designer: " << des->calcularSalario() << endl;
+    delete dev;
+    delete des;
+    return 0;
+}
+
+29)
+#include <iostream>
+using namespace std;
+class Complexo {
+private:
+    double real;
+    double imag;
+public:
+    Complexo(double r = 0.0, double i = 0.0) : real(r), imag(i) {}
+    Complexo operator+(const Complexo &c) const {
+        return Complexo(real + c.real, imag + c.imag);
+    }
+    void exibir() const {
+        if (imag >= 0)
+            cout << real << " + " << imag << "i" << endl;
+        else
+            cout << real << " - " << -imag << "i" << endl;
+    }
+};
+int main() {
+    Complexo c(6.2, 9.0); 
+    Complexo c2(1.75, -3.5); 
+    Complexo c3 = c + c2;
+    cout << "Primeiro número complexo: ";
+    c.exibir();
+    cout << "Segundo número complexo: ";
+    c2.exibir();
+    cout << "Resultado da soma: ";
+    c3.exibir();
+    return 0;
+}
+
+30)
+#include <iostream>
+using namespace std;
+class Fracao {
+private:
+    int numerador;
+    int denominador;
+    int mdc(int a, int b) const {
+        if (b == 0)
+            return a;
+        return mdc(b, a % b);
+    }
+    void simplificar() {
+        int divisor = mdc(numerador, denominador);
+        numerador /= divisor;
+        denominador /= divisor;
+    }
+public:
+    Fracao(int num, int den) : numerador(num), denominador(den) {
+        if (denominador == 0) {
+            throw invalid_argument("O denominador não pode ser zero.");
+        }
+        simplificar(); 
+    }
+    Fracao operator*(const Fracao &f) const {
+        return Fracao(numerador * f.numerador, denominador * f.denominador);
+    }
+    Fracao operator/(const Fracao &f) const {
+        return Fracao(numerador * f.denominador, denominador * f.numerador);
+    }
+    void exibir() const {
+        cout << numerador << "/" << denominador << endl;
+    }
+};
+int main() {
+    try {
+        Fracao f(6, 11); 
+        Fracao f2(4, 10); 
+        Fracao multiplicacao = f * f2;
+        Fracao divisao = f / f2;
+        cout << "Multiplicação: ";
+        multiplicacao.exibir();
+        cout << "Divisão: ";
+        divisao.exibir();
+    } catch (const invalid_argument &e) {
+        cout << e.what() << endl;
+    }
+    return 0;
+}
+
+31)
 
 
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
+//Biblioteca
