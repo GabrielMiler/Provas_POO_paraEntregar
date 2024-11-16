@@ -1,0 +1,120 @@
+POO
+Volta
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main(){
+    int X, Y;
+
+    cin >> X >> Y;
+
+    cout << ceil((double)Y/(Y - X)) << endl;
+
+    return 0;
+}
+//
+Sequência de Threebonacci
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+bool isThreebonacci(int num) {
+    string numStr = to_string(num);
+    if (numStr.find('3') != string::npos) return true;
+    if (num % 3 == 0) return true;
+    return false;
+}
+int getThreebonacci(int n) {
+    vector<int> fib = {1, 1}; 
+    vector<int> threebonacci; 
+    while (threebonacci.size() < n) {
+        int nextFib = fib[fib.size() - 1] + fib[fib.size() - 2];
+        fib.push_back(nextFib);
+        
+        if (isThreebonacci(nextFib)) {
+            threebonacci.push_back(nextFib);
+        }
+    }
+    return threebonacci[n - 1];
+}
+int main() {
+    int n;
+    while (cin >> n) {
+        cout << getThreebonacci(n) << endl;
+    }
+    return 0;
+}
+//
+Distância Entre Amigos
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <climits>
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector<int> A(n);
+    for (int i = 0; i < n; i++) {
+        cin >> A[i];
+    }
+    long long maxAdd = LLONG_MIN; 
+    long long maxSub = LLONG_MIN; 
+    for (int i = 0; i < n; i++) {
+        long long add = A[i] + i;
+        long long sub = A[i] - i;
+        maxAdd = max(maxAdd, add);
+        maxSub = max(maxSub, sub);
+    }
+    long long maxDistance = maxAdd + maxSub;
+    cout << maxDistance << endl;
+    return 0;
+}
+
+Estrutura de Dados
+Estiagem
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <cmath>
+using namespace std;
+int main()
+{
+    bool first;
+    vector<int> consumos;
+    double consumo_medio;
+    int T, N, X, Y, totalX, totalY;
+    T = 0;
+    while (cin >> N){
+        if (!N)
+            break;
+        if (T)
+            cout << endl;
+        totalX = 0, totalY = 0;
+        consumos.assign(201, 0);
+        for (int i = 0; i < N; ++i){
+            cin >> X >> Y;
+            totalX += X;
+            totalY += Y;
+            consumos[Y / X] += X;
+        }
+        first = true;
+        cout << "Cidade# " << ++T << ":" << endl;
+        for (int i = 0; i < 201; ++i){
+            if (consumos[i] > 0){
+                if (first)
+                    first = false;
+                else
+                    cout << ' ';
+                cout << consumos[i] << '-' << i;
+            }
+        }
+        cout << endl;
+        consumo_medio = floor((100.0 * totalY) / totalX) / 100.0;
+        cout << "Consumo medio: " << setprecision(2) << fixed << consumo_medio << " m3." << endl;
+    }
+    return 0;
+}
+//
