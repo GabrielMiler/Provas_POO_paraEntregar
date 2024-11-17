@@ -1,0 +1,94 @@
+Listas Encadeadas
+
+Exercícios Básicos
+
+1)
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+    
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} // Construtor
+};
+
+class ListaEncadeada {
+private:
+    Node *h; // Cabeça da lista
+    
+public:
+    ListaEncadeada() {
+        h = new Node(0); 
+        h->prox = nullptr;
+    }
+    
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado); 
+        }
+        delete h; 
+    }
+    
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+    
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox; // Ignorar o nó cabeça
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+    
+    lista.insereLista(1);
+    lista.insereLista(2);
+    lista.insereLista(3);
+    
+    cout << "Número de elementos na lista: " << lista.contaElementos() << endl;
+    
+    return 0;
+}
+
+2)
+
+3)
+
+4)
+
+Exercícios Intermediarios
+
+1)
+
+2)
+
+3)
+
+Exercícios Avançados
+
+1)
+
+2)
+
+3)
+
+4)
+
+Exercícios Desafiadores
+1)
+
+2)
+
+3)
+
+4)
