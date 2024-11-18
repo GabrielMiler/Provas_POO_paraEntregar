@@ -11,7 +11,7 @@ public:
     int dado;
     Node *prox;
     
-    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} // Construtor
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} 
 };
 
 class ListaEncadeada {
@@ -39,7 +39,7 @@ public:
     
     int contaElementos() const {
         int contador = 0;
-        Node *atual = h->prox; // Ignorar o nó cabeça
+        Node *atual = h->prox; 
         while (atual != nullptr) {
             contador++;
             atual = atual->prox;
@@ -199,7 +199,7 @@ public:
             current = next;       
         }
 
-        h->prox = prev; /
+        h->prox = prev; 
     }
 
     void imprimeLista() {
@@ -240,7 +240,7 @@ public:
     int dado;
     Node *prox;
     
-    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} // Construtor
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} 
 };
 
 class ListaEncadeada {
@@ -811,7 +811,7 @@ int main() {
 
 2)
 #include <iostream>
-#include <stdexcept> // Para exceções
+#include <stdexcept> 
 using namespace std;
 
 class Node {
@@ -889,8 +889,8 @@ public:
     }
 
     void removeNEsimoAPartirDoFinal(int n) {
-        Node *p1 = h->prox; // Ponteiro que avança
-        Node *p2 = h;       // Ponteiro que ficará n passos atrás
+        Node *p1 = h->prox; 
+        Node *p2 = h;       
 
         for (int i = 0; i < n; i++) {
             if (p1 == nullptr) {
@@ -939,7 +939,7 @@ int main() {
 
 3)
 #include <iostream>
-#include <stdexcept> // Para exceções
+#include <stdexcept> 
 using namespace std;
 
 class Node {
@@ -956,7 +956,7 @@ private:
 
 public:
     ListaEncadeada() {
-        h = new Node(0); // Nó cabeça
+        h = new Node(0); 
         h->prox = nullptr;
     }
 
@@ -1162,7 +1162,6 @@ int main() {
 
     return 0;
 }
-
 
 Exercícios Desafiadores
 
