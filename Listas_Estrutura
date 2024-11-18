@@ -232,6 +232,90 @@ int main() {
 
 
 4)
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+    
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} // Construtor
+};
+
+class ListaEncadeada {
+private:
+    Node *h; 
+    
+public:
+    ListaEncadeada() {
+        h = new Node(0); 
+        h->prox = nullptr;
+    }
+    
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado); 
+        }
+        delete h; 
+    }
+    
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+    
+    void insereNoFinal(int x) {
+        Node *atual = h;
+        
+        while (atual->prox != nullptr) {
+            atual = atual->prox;
+        }
+        
+        atual->prox = new Node(x);
+    }
+    
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox; 
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+    
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+        
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+    
+    lista.insereLista(1); 
+    lista.insereLista(2); 
+    lista.insereLista(3); 
+    lista.insereNoFinal(4); 
+    lista.insereNoFinal(5); 
+    
+    cout << "Número de elementos na lista: " << lista.contaElementos() << endl;
+    
+    return 0;
+}
 
 
 Exercícios Intermediarios
