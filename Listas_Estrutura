@@ -321,26 +321,389 @@ int main() {
 Exercícios Intermediarios
 
 1)
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+    
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} 
+};
+
+class ListaEncadeada {
+private:
+    Node *h; 
+    
+public:
+    ListaEncadeada() {
+        h = new Node(0); 
+        h->prox = nullptr;
+    }
+    
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado); 
+        }
+        delete h; 
+    }
+    
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+    
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox; 
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+    
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+        
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    void removeDuplicados() {
+        Node *atual = h->prox; 
+        
+        while (atual != nullptr) {
+            Node *ant = atual;
+            Node *prox = atual->prox;
+            
+            while (prox != nullptr) {
+                if (atual->dado == prox->dado) {
+                    ant->prox = prox->prox; 
+                    delete prox;            
+                    prox = ant->prox;       
+                } else {
+                    ant = prox;
+                    prox = prox->prox;
+                }
+            }
+            atual = atual->prox; 
+        }
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+    
+    lista.insereLista(1); 
+    lista.insereLista(2); 
+    lista.insereLista(3); 
+    lista.insereLista(3);  
+
+    cout << "Número de elementos antes de remover duplicatas: " << lista.contaElementos() << endl;
+    lista.removeDuplicados(); 
+    cout << "Número de elementos após remover duplicatas: " << lista.contaElementos() << endl;
+    
+    return 0;
+}
 
 2)
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} 
+};
+
+class ListaEncadeada {
+private:
+    Node *h; 
+
+public:
+    ListaEncadeada() {
+        h = new Node(0); 
+        h->prox = nullptr;
+    }
+
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado); 
+        }
+        delete h; 
+    }
+
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+
+    void insereNoFinal(int x) {
+        Node *atual = h;
+
+        while (atual->prox != nullptr) {
+            atual = atual->prox;
+        }
+
+        atual->prox = new Node(x);
+    }
+
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox; 
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    void imprimeLista() const {
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            cout << atual->dado << " ";
+            atual = atual->prox;
+        }
+        cout << endl;
+    }
+
+    friend ListaEncadeada mesclaListas(const ListaEncadeada &lista1, const ListaEncadeada &lista2);
+};
+
+ListaEncadeada mesclaListas(const ListaEncadeada &lista1, const ListaEncadeada &lista2) {
+    ListaEncadeada listaMesclada;
+
+    Node *ptr1 = lista1.h->prox; 
+    Node *ptr2 = lista2.h->prox; 
+
+    while (ptr1 != nullptr && ptr2 != nullptr) {
+        if (ptr1->dado <= ptr2->dado) {
+            listaMesclada.insereNoFinal(ptr1->dado);
+            ptr1 = ptr1->prox;
+        } else {
+            listaMesclada.insereNoFinal(ptr2->dado);
+            ptr2 = ptr2->prox;
+        }
+    }
+
+    while (ptr1 != nullptr) {
+        listaMesclada.insereNoFinal(ptr1->dado);
+        ptr1 = ptr1->prox;
+    }
+
+    while (ptr2 != nullptr) {
+        listaMesclada.insereNoFinal(ptr2->dado);
+        ptr2 = ptr2->prox;
+    }
+
+    return listaMesclada;
+}
+
+int main() {
+    ListaEncadeada lista1;
+    ListaEncadeada lista2;
+
+    lista1.insereNoFinal(1);
+    lista1.insereNoFinal(3);
+    lista1.insereNoFinal(5);
+
+    lista2.insereNoFinal(2);
+    lista2.insereNoFinal(4);
+    lista2.insereNoFinal(6);
+
+    cout << "Lista 1: ";
+    lista1.imprimeLista();
+
+    cout << "Lista 2: ";
+    lista2.imprimeLista();
+
+    ListaEncadeada listaMesclada = mesclaListas(lista1, lista2);
+
+    cout << "Lista Mesclada: ";
+    listaMesclada.imprimeLista();
+
+    return 0;
+}
 
 3)
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} 
+};
+
+class ListaEncadeada {
+private:
+    Node *h;
+
+public:
+    ListaEncadeada() {
+        h = new Node(0);
+        h->prox = nullptr;
+    }
+
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado);
+        }
+        delete h;
+    }
+
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+
+    void insereNoFinal(int x) {
+        Node *atual = h;
+
+        while (atual->prox != nullptr) {
+            atual = atual->prox;
+        }
+
+        atual->prox = new Node(x);
+    }
+
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    void imprimeLista() const {
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            cout << atual->dado << " ";
+            atual = atual->prox;
+        }
+        cout << endl;
+    }
+
+    void ordenaPorSelecao() {
+        Node *atual = h->prox; 
+        
+        while (atual != nullptr) {
+            Node *menor = atual;
+            Node *ptr = atual->prox;
+
+            while (ptr != nullptr) {
+                if (ptr->dado < menor->dado) {
+                    menor = ptr;
+                }
+                ptr = ptr->prox;
+            }
+
+            if (menor != atual) {
+                int temp = atual->dado;
+                atual->dado = menor->dado;
+                menor->dado = temp;
+            }
+
+            atual = atual->prox; 
+        }
+    }
+};
+int main() {
+    ListaEncadeada lista;
+
+    lista.insereNoFinal(5);
+    lista.insereNoFinal(3);
+    lista.insereNoFinal(8);
+    lista.insereNoFinal(1);
+    lista.insereNoFinal(4);
+
+    cout << "Lista original: ";
+    lista.imprimeLista();
+
+    lista.ordenaPorSelecao();
+
+    cout << "Lista ordenada: ";
+    lista.imprimeLista();
+
+    return 0;
+}
+
 
 Exercícios Avançados
 
 1)
 
+
 2)
 
+
 3)
+
 
 4)
 
+
 Exercícios Desafiadores
+
 1)
+
 
 2)
 
+
 3)
+
 
 4)
