@@ -61,10 +61,178 @@ int main() {
 }
 
 2)
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+    
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {} 
+};
+
+class ListaEncadeada {
+private:
+    Node *h; 
+    
+public:
+    ListaEncadeada() {
+        h = new Node(0); 
+        h->prox = nullptr;
+    }
+    
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado); 
+        }
+        delete h; 
+    }
+    
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+    
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+        
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    bool buscaElemento(int x) const {
+        Node *atual = h->prox; 
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                return true; 
+            }
+            atual = atual->prox;
+        }
+        return false; 
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+    
+    lista.insereLista(1);
+    lista.insereLista(2);
+    lista.insereLista(3);
+    
+    cout << "Elemento 2 está na lista? " << (lista.buscaElemento(2) ? "Sim" : "Não") << endl;
+    cout << "Elemento 5 está na lista? " << (lista.buscaElemento(5) ? "Sim" : "Não") << endl;
+    
+    return 0;
+}
 
 3)
+#include <iostream>
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+
+    Node(int d, Node *p = nullptr) : dado(d), prox(p) {}
+};
+
+class ListaEncadeada {
+private:
+    Node *h;
+
+public:
+    ListaEncadeada() {
+        h = new Node(0);
+        h->prox = nullptr;
+    }
+
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado);
+        }
+        delete h;
+    }
+
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    void inverterLista() {
+        Node *prev = nullptr;
+        Node *current = h->prox;
+        Node *next = nullptr;
+
+        while (current != nullptr) {
+            next = current->prox; 
+            current->prox = prev; 
+            prev = current;       
+            current = next;       
+        }
+
+        h->prox = prev; /
+    }
+
+    void imprimeLista() {
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            cout << atual->dado << " -> ";
+            atual = atual->prox;
+        }
+        cout << "NULL" << endl;
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+
+    lista.insereLista(1);
+    lista.insereLista(2);
+    lista.insereLista(3);
+
+    cout << "Lista original: ";
+    lista.imprimeLista();
+
+    lista.inverterLista();
+
+    cout << "Lista invertida: ";
+    lista.imprimeLista();
+
+    return 0;
+}
+
 
 4)
+
 
 Exercícios Intermediarios
 
