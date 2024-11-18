@@ -684,15 +684,484 @@ int main() {
 Exercícios Avançados
 
 1)
+#include <iostream>
+#include <stdexcept> // Para exceções
+using namespace std;
 
+class Node {
+public:
+    int dado;
+    Node *prox;
+
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {}
+};
+
+class ListaEncadeada {
+private:
+    Node *h;
+
+public:
+    ListaEncadeada() {
+        h = new Node(0); // Nó cabeça
+        h->prox = nullptr;
+    }
+
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado);
+        }
+        delete h;
+    }
+
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+
+    void insereNoFinal(int x) {
+        Node *atual = h;
+        while (atual->prox != nullptr) {
+            atual = atual->prox;
+        }
+        atual->prox = new Node(x);
+    }
+
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    void imprimeLista() const {
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            cout << atual->dado << " ";
+            atual = atual->prox;
+        }
+        cout << endl;
+    }
+
+    int encontraElementoAPartirDoFinal(int n) {
+        Node *p1 = h->prox; 
+        Node *p2 = h->prox; 
+
+        for (int i = 0; i < n; i++) {
+            if (p1 == nullptr) {
+                throw invalid_argument("N é maior que o número de elementos na lista.");
+            }
+            p1 = p1->prox;
+        }
+
+        while (p1 != nullptr) {
+            p1 = p1->prox;
+            p2 = p2->prox;
+        }
+
+        if (p2 == nullptr) {
+            throw runtime_error("Erro inesperado.");
+        }
+
+        return p2->dado;
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+
+    lista.insereNoFinal(10);
+    lista.insereNoFinal(20);
+    lista.insereNoFinal(30);
+    lista.insereNoFinal(40);
+    lista.insereNoFinal(50);
+
+    cout << "Lista: ";
+    lista.imprimeLista();
+
+    try {
+        int n = 2; 
+        int elemento = lista.encontraElementoAPartirDoFinal(n);
+        cout << "O " << n << "º elemento a partir do final é: " << elemento << endl;
+    } catch (const exception &e) {
+        cout << "Erro: " << e.what() << endl;
+    }
+
+    return 0;
+}
 
 2)
+#include <iostream>
+#include <stdexcept> // Para exceções
+using namespace std;
 
+class Node {
+public:
+    int dado;
+    Node *prox;
+
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {}
+};
+
+class ListaEncadeada {
+private:
+    Node *h;
+
+public:
+    ListaEncadeada() {
+        h = new Node(0); // Nó cabeça
+        h->prox = nullptr;
+    }
+
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado);
+        }
+        delete h;
+    }
+
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+
+    void insereNoFinal(int x) {
+        Node *atual = h;
+        while (atual->prox != nullptr) {
+            atual = atual->prox;
+        }
+        atual->prox = new Node(x);
+    }
+
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    void imprimeLista() const {
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            cout << atual->dado << " ";
+            atual = atual->prox;
+        }
+        cout << endl;
+    }
+
+    void removeNEsimoAPartirDoFinal(int n) {
+        Node *p1 = h->prox; // Ponteiro que avança
+        Node *p2 = h;       // Ponteiro que ficará n passos atrás
+
+        for (int i = 0; i < n; i++) {
+            if (p1 == nullptr) {
+                throw invalid_argument("N é maior que o número de elementos na lista.");
+            }
+            p1 = p1->prox;
+        }
+
+        while (p1 != nullptr) {
+            p1 = p1->prox;
+            p2 = p2->prox;
+        }
+
+        Node *paraRemover = p2->prox;
+        if (paraRemover == nullptr) {
+            throw runtime_error("Erro: índice inválido.");
+        }
+        p2->prox = paraRemover->prox;
+        delete paraRemover;
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+
+    lista.insereNoFinal(10);
+    lista.insereNoFinal(20);
+    lista.insereNoFinal(30);
+    lista.insereNoFinal(40);
+    lista.insereNoFinal(50);
+
+    cout << "Lista: ";
+    lista.imprimeLista();
+
+    try {
+        int n = 2; 
+        lista.removeNEsimoAPartirDoFinal(n);
+        cout << "Após remover o " << n << "º elemento a partir do final: ";
+        lista.imprimeLista();
+    } catch (const exception &e) {
+        cout << "Erro: " << e.what() << endl;
+    }
+
+    return 0;
+}
 
 3)
+#include <iostream>
+#include <stdexcept> // Para exceções
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {}
+};
+
+class ListaEncadeada {
+private:
+    Node *h;
+
+public:
+    ListaEncadeada() {
+        h = new Node(0); // Nó cabeça
+        h->prox = nullptr;
+    }
+
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado);
+        }
+        delete h;
+    }
+
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+
+    void insereNoFinal(int x) {
+        Node *atual = h;
+        while (atual->prox != nullptr) {
+            atual = atual->prox;
+        }
+        atual->prox = new Node(x);
+    }
+
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    void imprimeLista() const {
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            cout << atual->dado << " ";
+            atual = atual->prox;
+        }
+        cout << endl;
+    }
+
+    void duplicaElementos() {
+        Node *atual = h->prox; 
+        while (atual != nullptr) {
+            
+            Node *duplicado = new Node(atual->dado);
+            
+            duplicado->prox = atual->prox;
+            atual->prox = duplicado;
+            
+            atual = duplicado->prox;
+        }
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+
+    lista.insereNoFinal(10);
+    lista.insereNoFinal(20);
+    lista.insereNoFinal(30);
+
+    cout << "Lista original: ";
+    lista.imprimeLista();
+
+    lista.duplicaElementos();
+
+    cout << "Lista após duplicar os elementos: ";
+    lista.imprimeLista();
+
+    return 0;
+}
 
 
 4)
+#include <iostream>
+#include <stdexcept>
+using namespace std;
+
+class Node {
+public:
+    int dado;
+    Node *prox;
+
+    Node(int d, Node* p = nullptr) : dado(d), prox(p) {}
+};
+
+class ListaEncadeada {
+private:
+    Node *h;
+
+    Node* inverteRecursivoAux(Node* atual) {
+        if (atual == nullptr || atual->prox == nullptr) {
+            return atual; 
+        }
+
+        Node* novoCabeca = inverteRecursivoAux(atual->prox); 
+        atual->prox->prox = atual; 
+        atual->prox = nullptr;    /
+        return novoCabeca;      
+    }
+
+public:
+    ListaEncadeada() {
+        h = new Node(0); 
+        h->prox = nullptr;
+    }
+
+    ~ListaEncadeada() {
+        while (h->prox != nullptr) {
+            removeLista(h->prox->dado);
+        }
+        delete h;
+    }
+
+    void insereLista(int x) {
+        Node *n = new Node(x);
+        n->prox = h->prox;
+        h->prox = n;
+    }
+
+    void insereNoFinal(int x) {
+        Node *atual = h;
+        while (atual->prox != nullptr) {
+            atual = atual->prox;
+        }
+        atual->prox = new Node(x);
+    }
+
+    int contaElementos() const {
+        int contador = 0;
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            contador++;
+            atual = atual->prox;
+        }
+        return contador;
+    }
+
+    bool removeLista(int x) {
+        Node *ant = h;
+        Node *atual = h->prox;
+
+        while (atual != nullptr) {
+            if (atual->dado == x) {
+                ant->prox = atual->prox;
+                delete atual;
+                return true;
+            }
+            ant = atual;
+            atual = atual->prox;
+        }
+        return false;
+    }
+
+    void imprimeLista() const {
+        Node *atual = h->prox;
+        while (atual != nullptr) {
+            cout << atual->dado << " ";
+            atual = atual->prox;
+        }
+        cout << endl;
+    }
+
+    void inverteRecursivo() {
+        h->prox = inverteRecursivoAux(h->prox); 
+    }
+};
+
+int main() {
+    ListaEncadeada lista;
+
+    lista.insereNoFinal(10);
+    lista.insereNoFinal(20);
+    lista.insereNoFinal(30);
+    lista.insereNoFinal(40);
+
+    cout << "Lista original: ";
+    lista.imprimeLista();
+
+    lista.inverteRecursivo();
+
+    cout << "Lista invertida: ";
+    lista.imprimeLista();
+
+    return 0;
+}
 
 
 Exercícios Desafiadores
